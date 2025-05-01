@@ -9,7 +9,7 @@
 ################################################################################
 # Create a stage for building the application.
 ARG GO_VERSION=1.23.4
-FROM --platform=$BUILDPLATFORM golang:${GO_VERSION} AS build
+FROM golang:${GO_VERSION} AS build
 WORKDIR /src
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
@@ -30,7 +30,7 @@ ARG TARGETARCH
 # source code into the container.
 RUN --mount=type=cache,target=/go/pkg/mod/ \
     --mount=type=bind,target=. \
-    CGO_ENABLED=0 GOARCH=$TARGETARCH go build -o /bin/server .
+    CGO_ENABLED=0 go build -o /bin/server .
 
 ################################################################################
 # Create a new stage for running the application that contains the minimal
