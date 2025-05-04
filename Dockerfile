@@ -4,3 +4,9 @@ WORKDIR /app
 COPY . .
 
 RUN ls -a
+
+RUN go download
+
+RUN go mod tidy 
+
+CMD ["go", "run", "."]
