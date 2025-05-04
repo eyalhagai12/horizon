@@ -15,4 +15,4 @@ COPY --from=build /app/server /app/server
 WORKDIR /app
 
 EXPOSE 8080
-ENTRYPOINT ["/app/server"
+ENTRYPOINT ["/app/server"]
