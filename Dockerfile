@@ -1,16 +1,13 @@
-# syntax=docker/dockerfile:1
 FROM golang:1.21 AS build
 WORKDIR /app
 
 COPY . .
 
+# DEBUG: List contents to confirm files copied
+RUN echo "Contents of /app:" && ls -al /app
+
+# DEBUG: Print go.mod to see what's going wrong
+RUN echo "go.mod:" && cat /app/go.mod
+
+# Now attempt tidy
 RUN go mod tidy
-RUN CGO_ENABLED=0 GOOS=linux go build -o app .
-
-FROM alpine:latest
-RUN apk add --no-cache ca-certificates tzdata
-
-COPY --from=build /app/app /app/app
-WORKDIR /app
-EXPOSE 8080
-ENTRYPOINT ["/app/app"]
