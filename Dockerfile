@@ -5,7 +5,7 @@ COPY . .
 
 RUN ls -a
 
-RUN go download
+RUN go download -x
 
 RUN go mod tidy 
 
